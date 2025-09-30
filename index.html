@@ -12,128 +12,151 @@
       font-family: Arial, sans-serif;
     }
 
-    body {
-      background: #f9f9f9;
-      color: #333;
+    body, html {
+      height: 100%;
     }
 
     /* Header */
     header {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       align-items: center;
       padding: 20px 50px;
-      background: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      position: relative;
+      position: absolute;
+      top: 0;
+      width: 100%;
       z-index: 10;
     }
 
-    header nav a {
-      margin-left: 30px;
+    .nav-left a {
+      margin-right: 30px;
       text-decoration: none;
-      color: #333;
+      color: #fff;
       font-size: 16px;
       position: relative;
       padding-bottom: 5px;
+      transition: color 0.3s;
     }
 
-    header nav a::after {
+    .nav-left a::after {
       content: "";
       position: absolute;
       left: 0;
-      bottom: 0;
+      bottom: -3px;
       width: 0;
       height: 3px;
-      background: #316895;
-      transition: width 0.3s ease;
+      background: #fff;
+      transition: width 0.4s ease; /* smooth width animation */
     }
 
-    header nav a:hover::after {
+    .nav-left a:hover::after,
+    .nav-left a.active::after {
       width: 100%;
     }
 
-    header nav a.active::after {
-      width: 100%; 
+    .nav-right button {
+      padding: 10px 20px;
+      border: 1px solid #fff;
+      border-radius: 25px;
+      background: transparent;
+      color: #fff;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .nav-right button:hover {
+      background: #fff;
+      color: #316895;
     }
 
     /* Hero Section */
     .hero {
+      position: relative;
+      height: 100vh;
+      width: 100%;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      height: 100vh; 
+      justify-content: center;
       overflow: hidden;
     }
 
+    /* Background image with blur */
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('image/barley-9642413.jpg') no-repeat center center/cover;
+      filter: blur(5px);
+      z-index: 0;
+      transform: scale(1.05);
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1;
+    }
+
+    /* Centered text with enhanced fade-in from bottom */
     .hero-text {
-      flex: 1;
-      padding: 80px;
+      position: relative;
       z-index: 2;
+      text-align: center;
+      color: #fff;
+      max-width: 600px;
+      padding: 20px;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fadeUp 1s forwards; /* animation applied */
+      animation-delay: 0.5s;
+    }
+
+    @keyframes fadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .hero-text h1 {
       font-size: 48px;
-      line-height: 1.2;
-      color: #222;
+      margin-bottom: 20px;
     }
 
     .hero-text p {
-      margin: 20px 0;
-      color: #666;
-      max-width: 400px;
-      font-size: 16px;
+      font-size: 18px;
+      margin-bottom: 30px;
     }
 
-    .buttons {
-      margin-top: 20px;
-    }
-
-    .buttons button {
+    .hero-text .buttons button {
       padding: 12px 25px;
-      margin-right: 15px;
+      margin: 0 10px;
       border-radius: 25px;
-      border: none;
+      border: 1px solid #fff;
+      background: transparent;
+      color: #fff;
       cursor: pointer;
       font-size: 14px;
-      background: #316895;
-      color: #fff;
       transition: 0.3s;
     }
 
-    .buttons button:hover {
-      background: #254b6b;
-    }
-
-    .buttons .secondary {
+    .hero-text .buttons button:hover {
       background: #fff;
       color: #316895;
-      border: 1px solid #316895;
     }
 
-    .buttons .secondary:hover {
-      background: #316895;
-      color: #fff;
-    }
-
-    .hero-image {
-      flex: 1;
-      height: 100%;
-    }
-
-  .hero-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: right center;
-  transition: transform 0.6s ease; 
-}
-
-.hero-image img:hover {
-  transform: translateX(-20px); 
-}
-
- 
     footer {
       text-align: center;
       padding: 20px;
@@ -142,32 +165,40 @@
       color: #666;
       border-top: 1px solid #eee;
     }
+
+    @media(max-width: 768px){
+      .hero-text h1 { font-size: 36px; }
+      .hero-text p { font-size: 16px; }
+      header { padding: 15px 30px; }
+    }
   </style>
 </head>
 <body>
 
+  <!-- Header -->
   <header>
-    <nav>
+    <div class="nav-left">
       <a href="#" class="active">Home</a>
       <a href="#">About</a>
       <a href="#">Features</a>
       <a href="#">Contact</a>
-    </nav>
+    </div>
+    <div class="nav-right">
+      <button>Login</button>
+    </div>
   </header>
 
   <!-- Hero Section -->
   <section class="hero">
+    <div class="overlay"></div>
     <div class="hero-text">
       <h1>Smart School <br> Management System</h1>
       <p>Streamline your school operations with modern digital tools. 
       Manage attendance, timetables, exams, and parent communication—all from one platform.</p>
       <div class="buttons">
         <button>Get Started</button>
-        <button class="secondary">About</button>
+        <button>About</button>
       </div>
-    </div>
-    <div class="hero-image">
-      <img src="image/img1.jpg" alt="classroom">
     </div>
   </section>
 
